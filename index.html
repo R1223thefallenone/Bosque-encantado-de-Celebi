@@ -252,8 +252,8 @@
     .vertical-button-group {
         position: absolute;
         right: 20px;
-        top: 40%; /* CENTRAMOS VERTICALMENTE AL 40% (MÁS ARRIBA) */
-        transform: translateY(-50%); /* Ajuste para un centrado vertical perfecto */
+        top: 50%; /* CENTRAMOS VERTICALMENTE AL 40% (MÁS ARRIBA) */
+        transform: translateY(-70%); /* Ajuste para un centrado vertical perfecto */
         z-index: 10;
         pointer-events: all;
         display: flex;
@@ -357,7 +357,7 @@
         .card-exp-bar-position { max-width: 50%; margin: 0 10px; }
 
         /* Ocultamos el grupo vertical en móvil si está en la esquina superior derecha*/
-        .vertical-button-group { display:none; }
+        .vertical-button-group { display:flex; }
         
         .speed-stat-position { margin-right: 5px; font-size: 13px; padding: 3px 8px; }
 
@@ -369,7 +369,7 @@
   <div class="app">
     <header>
       <div class="logo">⭐</div>
-      <div class="title">Pokémon Tracker Dinámico</div>
+      <div class="title">Bosque Encantado de Celebi</div>
     </header>
 
     <main class="panel">
@@ -1218,3 +1218,4 @@
   </script>
 </body>
 </html>
+
