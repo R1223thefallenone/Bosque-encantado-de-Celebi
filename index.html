@@ -651,7 +651,7 @@
       // =================================================================
 
       const name = row.Name;
-      const technicalOverrideList = ['Bulbasaur', 'Ivysaur', 'Oddish', 'Paras', 'Venonat'];
+      const technicalOverrideList = ['Bulbasaur', 'Ivysaur', 'Oddish', 'Paras', 'Venonat','Venusaur', 'Butterfree', 'Gloom', 'Vileplume', 'Venomoth'];
       const isTechnicalOverride = technicalOverrideList.includes(name);
 
       if (isTechnicalOverride) {
@@ -662,7 +662,7 @@
           clas = 'Fuerte';
       }
       // 2. Clasificación RÁPIDO (Velocidad extrema)
-      else if (SPEED >= 70 && coef < 2) {
+      else if (SPEED >= 70 && coef < 2.7) {
           clas = 'Rápido';
       }
       // 2.5. Clasificación FUERTE (Promoción por Coeficiente Intermedio + Lento)
@@ -671,7 +671,7 @@
       }
       // 3. Diferenciación para el resto (coef <= 4.25 y no override)
       else { 
-          if (SPEED < 70) {
+          if (SPEED < 81) {
               clas = 'Técnico';
           }
           else {
@@ -1218,6 +1218,7 @@
   </script>
 </body>
 </html>
+
 
 
 
