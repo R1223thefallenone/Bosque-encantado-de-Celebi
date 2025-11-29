@@ -369,7 +369,7 @@
   <div class="app">
     <header>
       <div class="logo">⭐</div>
-      <div class="title">Pokémon Tracker Dinámico</div>
+      <div class="title">Pokémon Adventure</div>
     </header>
 
     <main class="panel">
@@ -828,7 +828,7 @@
           p.type2 = evolvedStats.type2;
           p.clas = evolvedStats.clas;
           p.spriteId = evolvedStats.id; 
-          p.vidas = Math.min(9, p.vidas + 1); 
+          p.vidas = Math.min(100, p.vidas + 1); 
           p.speed = evolvedStats.speed; 
           p.coef = evolvedStats.coef; 
 
@@ -1003,7 +1003,7 @@
     }
     $('addLife').onclick = ()=>{
       const p=state.currentPokemon; if(!p) return;
-      p.vidas = Math.min(9,p.vidas+1);
+      p.vidas = Math.min(100,p.vidas+1);
       renderSheet(p);
       saveAll();
     }
