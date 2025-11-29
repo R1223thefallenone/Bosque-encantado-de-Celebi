@@ -239,7 +239,7 @@
         border-radius: 8px;
         box-shadow: none;
         /* BORDE NEGRO SOLICITADO */
-        border: 1px solid var(--ink); 
+        border: 2px solid var(--ink); 
     }
     .exp-bar{height:100%; background:linear-gradient(90deg, #9b59b6, #7a47a1); transition: width 0.3s ease-out; border-radius:8px;}
 
@@ -252,8 +252,8 @@
     .vertical-button-group {
         position: absolute;
         right: 20px;
-        top: 32%; /* CENTRAMOS VERTICALMENTE AL 40% (MÁS ARRIBA) */
-        transform: translateY(-52%); /* Ajuste para un centrado vertical perfecto */
+        top: 38%; /* CENTRAMOS VERTICALMENTE AL 40% (MÁS ARRIBA) */
+        transform: translateY(-45%); /* Ajuste para un centrado vertical perfecto */
         z-index: 10;
         pointer-events: all;
         display: flex;
@@ -369,7 +369,7 @@
   <div class="app">
     <header>
       <div class="logo">⭐</div>
-      <div class="title">Bosque Encantado de Celebi</div>
+      <div class="title">Pokémon Tracker Dinámico</div>
     </header>
 
     <main class="panel">
@@ -651,7 +651,7 @@
       // =================================================================
 
       const name = row.Name;
-      const technicalOverrideList = ['Bulbasaur', 'Ivysaur', 'Oddish', 'Paras', 'Venonat','Venusaur', 'Butterfree', 'Gloom', 'Vileplume', 'Venomoth'];
+      const technicalOverrideList = ['Bulbasaur', 'Ivysaur', 'Oddish', 'Paras', 'Venonat','Venusaur','Butterfree', 'Nidoqueen', 'Gloom', 'Vileplume', 'Venomoth','Tentacool'];
       const isTechnicalOverride = technicalOverrideList.includes(name);
 
       if (isTechnicalOverride) {
@@ -662,7 +662,7 @@
           clas = 'Fuerte';
       }
       // 2. Clasificación RÁPIDO (Velocidad extrema)
-      else if (SPEED >= 70 && coef < 2.7) {
+      else if (SPEED >= 56 && coef < 2.5) {
           clas = 'Rápido';
       }
       // 2.5. Clasificación FUERTE (Promoción por Coeficiente Intermedio + Lento)
@@ -671,7 +671,7 @@
       }
       // 3. Diferenciación para el resto (coef <= 4.25 y no override)
       else { 
-          if (SPEED < 81) {
+          if (SPEED < 68) {
               clas = 'Técnico';
           }
           else {
@@ -698,6 +698,7 @@
 
           if (hasSubsequentEvolution && vidas === 5) {
               // Si es un BÁSICO que evoluciona (Etapa 1), es Fuerte, y el algoritmo le dio 5, se capa a 4.
+              // Esto no afecta a Snorlax o Rhydon. Afecta a Rhyhorn (5.86 -> 4), Slowpoke (7.5 -> 4), Geodude (5.5 -> 4), etc.
               vidas = 4;
           }
       }
@@ -965,9 +966,9 @@
       } else if(clas==='Ofensivo'){ 
         desc.innerHTML = `<strong>Ofensivo ⚔️ (${currentVidas} Vidas Base)</strong><p>Daño Consistente: hace <strong>2 corazones</strong> de daño si en la tirada de d20 obtienes un número <strong>mayor o igual a 13</strong> (13–20).<br><em>Táctica: La clase con mayor precisión para infligir 2 de daño. Atacantes principales y confiables.</em></p>`;
       } else if(clas==='Técnico'){
-        desc.innerHTML = `<strong>Técnico ⭐ (${currentVidas} Vidas Base)</strong><p>Precisión y Control: hace <strong>1 corazón</strong> de daño si sacas <strong>11 o más</strong> en d20. Además, si obtienes <strong>1</strong> o <strong>20</strong>, se aplica un <strong>problema de estado</strong> (Envenenan, Duermen o Queman).<p><div style="margin-top:8px;font-size:13px;color:var(--muted)">Táctica: Se centran en utilidad y control de campo.</div>`;
+        desc.innerHTML = `<strong>Técnico ⭐ (${currentVidas} Vidas Base)</strong><p>Precisión y Control: hace <strong>1 corazón</strong> de daño si sacas <strong>11 o más</strong> en d20. Además, si obtienes <strong>1</strong> o <strong>20</strong>, se aplica un <strong>problema de estado</strong> (Envenenan, Paraliza o Queman).<p><div style="margin-top:8px;font-size:13px;color:var(--muted)">Táctica: Se centran en utilidad y control de campo.</div>`;
       } else { // Rápido
-        desc.innerHTML = `<strong>Rápido ⚡ (${currentVidas} Vidas Base)</strong><p>Velocidad y Evasión: hace <strong>1 corazón</strong> de daño si sacas <strong>8 o más</strong> en d20. Si sacas <strong>20</strong>, el golpe **paraliza** garantizado.</p><div style="margin-top:8px;font-size:13px;color:var(--muted)">Táctica: Pokémon rápidos atacan primero y mantienen presión constante.</div>`;
+        desc.innerHTML = `<strong>Rápido ⚡ (${currentVidas} Vidas Base)</strong><p>Velocidad y Evasión: hace <strong>1 corazón</strong> de daño si sacas <strong>8 o más</strong> en d20. Si sacas <strong>19-20</strong>, el golpe es **Critico**.</p><div style="margin-top:8px;font-size:13px;color:var(--muted)">Habilidad Pokémon:Evasion (El rival lanza una moneda si sale sello falla el ataque).</div>`;
       }
     }
 
@@ -1218,8 +1219,3 @@
   </script>
 </body>
 </html>
-
-
-
-
-
