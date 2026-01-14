@@ -240,15 +240,15 @@
     
     .vertical-button-group {
         position: absolute;
-        right: 20px;
-        top: 38%; /* CENTRAMOS VERTICALMENTE AL 40% (MÁS ARRIBA) */
+        right: 40px;
+        top: 34%; /* CENTRAMOS VERTICALMENTE AL 40% (MÁS ARRIBA) */
         transform: translateY(-45%); /* Ajuste para un centrado vertical perfecto */
         z-index: 10;
         pointer-events: all;
         display: flex;
         flex-direction: column; /* Apilamiento vertical */
         align-items: center;
-        gap: 5px; /* Mantenemos el espacio reducido */
+        gap: 2px; /* Mantenemos el espacio reducido */
     }
 
     #rollBtn {
@@ -340,13 +340,23 @@
         .compact-header { gap: 10px; }
         .stat-circle { width: 48px; height: 48px; }
         .stat-circle .num { font-size: 18px; }
-        .big-sprite img { height: 90%; top: -5%; } 
+        .big-sprite img { position: absolute; height: 30%; top: 24%; } 
         
         .top-controls-row { margin-bottom: 10px; }
         .card-exp-bar-position { max-width: 50%; margin: 0 10px; }
 
         /* Ocultamos el grupo vertical en móvil si está en la esquina superior derecha*/
-        .vertical-button-group { display:flex; }
+        .vertical-button-group { 
+        position: absolute;
+        right: 16px;
+        top: 27%; /* CENTRAMOS VERTICALMENTE AL 40% (MÁS ARRIBA) */
+        transform: translateY(-45%); /* Ajuste para un centrado vertical perfecto */
+        z-index: 10;
+        pointer-events: all;
+        display: flex;
+        flex-direction: column; /* Apilamiento vertical */
+        align-items: center;
+        gap: 2px; /* Mantenemos el espacio reducido */ }
         
         .speed-stat-position { margin-right: 5px; font-size: 13px; padding: 3px 8px; }
 
