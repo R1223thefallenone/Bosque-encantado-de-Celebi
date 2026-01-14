@@ -222,7 +222,7 @@
 
       let vidas = 0;
       if (clas === 'Rápido') {
-          vidas = 2; 
+          vidas = 3; 
       }
       else if (clas === 'Ofensivo' || clas === 'Técnico') {
           vidas = 3; 
@@ -503,13 +503,13 @@
       const currentVidas = p ? p.vidas : 0;
       
       if(clas==='Fuerte'){
-        desc.innerHTML = `<strong>Fuerte 💥 (${currentVidas} Vidas Base)</strong><p>Golpe Potente: hace <strong>2 corazones</strong> de daño si en la tirada de d20 obtienes un número <strong>mayor o igual a 14</strong> (14–20).<br><em>Táctica: Pokémon lentos pero con el máximo daño base. Su rol es tanquear y golpear fuerte.</em></p>`;
+        desc.innerHTML = `<strong>Fuerte 💥 (${currentVidas} Vidas Base)</strong><p>💥 hace <strong>2 corazones</strong> de daño si en la tirada de d20 obtienes un número <strong>mayor o igual a 13</strong> (13–20).<br><em>Habilidad: Daño colateral, si obtienes un 1 o 2 dañas en 1 corazon al rival .</em></p>`;
       } else if(clas==='Ofensivo'){ 
-        desc.innerHTML = `<strong>Ofensivo ⚔️ (${currentVidas} Vidas Base)</strong><p>Daño Consistente: hace <strong>2 corazones</strong> de daño si en la tirada de d20 obtienes un número <strong>mayor o igual a 13</strong> (13–20).<br><em>Táctica: La clase con mayor precisión para infligir 2 de daño. Atacantes principales y confiables.</em></p>`;
+        desc.innerHTML = `<strong>Ofensivo ⚔️ (${currentVidas} Vidas Base)</strong><p>⚔️ hace <strong>2 corazones</strong> de daño si en la tirada de d20 obtienes un número <strong>mayor o igual a 13</strong> (13–20).<br><em>Habilidad: Golpe critico, si obtienes un 20 golpeas con de 3 corazones al rival.</em></p>`;
       } else if(clas==='Técnico'){
-        desc.innerHTML = `<strong>Técnico ⭐ (${currentVidas} Vidas Base)</strong><p>Precisión y Control: hace <strong>1 corazón</strong> de daño si sacas <strong>11 o más</strong> en d20. Además, si obtienes <strong>1</strong> o <strong>20</strong>, se aplica un <strong>problema de estado</strong> (Envenenan, Paraliza o Queman).<p><div style="margin-top:8px;font-size:13px;color:var(--muted)">Táctica: Se centran en utilidad y control de campo.</div>`;
+        desc.innerHTML = `<strong>Técnico ⭐ (${currentVidas} Vidas Base)</strong><p>⭐ hace <strong>1 corazón</strong> de daño si sacas <strong>12 o más</strong> en d20. Además, si obtienes <strong>1,2,3</strong> o <strong>20</strong>, se aplica un <strong>problema de estado</strong>.<p><div style="margin-top:8px;font-size:13px;color:var(--muted)">Habilidad: Problema de estado, si quema o envenena el pokemon rival pierde 1 corazon cada turno. Si paraliza el pokemon rival no puede atacar a menos que en su turno al lanzar una moneda obtenga cara ||(Envenena:Planta,Bicho,Veneno) (Quema:Fuego) (Paraliza:El resto de los tecnicos)|| .</div>`;
       } else { // Rápido
-        desc.innerHTML = `<strong>Rápido ⚡ (${currentVidas} Vidas Base)</strong><p>Velocidad y Evasión: hace <strong>1 corazón</strong> de daño si sacas <strong>8 o más</strong> en d20. Si sacas <strong>19-20</strong>, el golpe es **Critico**.</p><div style="margin-top:8px;font-size:13px;color:var(--muted)">Habilidad Pokémon:Evasion (El rival lanza una moneda si sale sello falla el ataque).</div>`;
+        desc.innerHTML = `<strong>Rápido ⚡ (${currentVidas} Vidas Base)</strong><p>⚡ hace <strong>1 corazón</strong> de daño si sacas <strong>10 o más</strong> en d20. Si sacas <strong>18-20</strong>, el golpe es **Critico**.</p><div style="margin-top:8px;font-size:13px;color:var(--muted)"></div>`;
       }
     }
 
@@ -605,10 +605,13 @@
 
       // Lógica de acierto y efectos según la clase
       if(clas==='Fuerte'){
-        if(r>=14){ // Fuerte: >= 14 para 2 daño
+        if(r>=13){ // Fuerte: >= 14 para 2 daño
           resultText = `Resultado de **Fuerte**: ¡Acierta! (2 corazones)`;
         } else {
-          resultText = `Resultado de **Fuerte**: Falla (necesita 14+)`;
+          resultText = `Resultado de **Fuerte**: Falla (necesita 13+)`;
+        }
+        if(r===1 || r===2){
+          resultText += ` | ¡Daño colateral!`;
         }
       } else if(clas==='Ofensivo'){ 
         if(r>=13){ // Ofensivo: >= 13 para 2 daño
@@ -616,30 +619,33 @@
         } else {
           resultText = `Resultado de **Ofensivo**: Falla (necesita 13+)`;
         }
+        if(r===20)     {
+          resultText += ` | ¡Critico!`;
+        }
       } else if(clas==='Técnico'){
-        if(r>=11){ // Técnico: >= 11 para 1 daño
+        if(r>=12){ // Técnico: >= 11 para 1 daño
           resultText = `Resultado de **Técnico**: ¡Acierta! (1 corazón)`;
         } else {
-          resultText = `Resultado de **Técnico**: Falla (necesita 11+)`;
+          resultText = `Resultado de **Técnico**: Falla (necesita 12+)`;
         }
-        if(r===1 || r===20){
+        if(r===1 || r===2 || r===3 || r===20){
           resultText += ` | ¡Problema de estado aplicable!`;
         }
       } else { // Rápido
-        if(r>=8){ // Rápido: >= 8 para 1 daño
+        if(r>=10){ // Rápido: >= 8 para 1 daño
           resultText = `Resultado de **Rápido**: ¡Acierta! (1 corazón)`;
         } else {
-          resultText = `Resultado de **Rápido**: Falla (necesita 8+)`;
+          resultText = `Resultado de **Rápido**: Falla (necesita 10+)`;
         }
-        if(r===20){
-          resultText += ` | ¡Paraliza garantizado!`;
+        if(r===18 || r===19 || r===20)     {
+          resultText += ` | ¡Critico!`;
         }
       }
       
-      let isHit = (clas === 'Rápido' && r >= 8) || 
-                  (clas === 'Técnico' && r >= 11) || 
+      let isHit = (clas === 'Rápido' && r >= 10) || 
+                  (clas === 'Técnico' && r >= 12) || 
                   (clas === 'Ofensivo' && r >= 13) || 
-                  (clas === 'Fuerte' && r >= 14);
+                  (clas === 'Fuerte' && r >= 13);
 
       log(`${logMsg}${resultText}`, isHit); 
 
