@@ -1,0 +1,354 @@
+    /* --- Estética Pokédex Limpia (acuarela pastel) --- */
+    :root{
+      --bg:#f8f4ed; /* Fondo Principal */
+      --card:#fffcf8; /* Fondo de Tarjeta y Lista */
+      --accent:#9b59b6; /* Morado (General) */
+      --exp:#7a47a1; /* Morado Oscuro (EXP Circle) */
+      --heart:#ff5c7c; /* Rosa (Corazón Fuerte) */
+      --ink:#3b2f2f; /* Tinta Principal (NEGRO) */
+      --muted:#7b6f6f; /* Texto Secundario */
+      --active-shadow: 0 4px 10px rgba(59,47,47,0.08); 
+      --shadow: 0 10px 25px rgba(59,47,47,0.1); /* Sombra más limpia */
+      --radius:20px;
+      --gutter:16px;
+      font-family: 'Nunito', 'Segoe UI', Roboto, -apple-system, 'Helvetica Neue', Arial;
+      font-weight: 700;
+      scroll-behavior: smooth;
+    }
+    html,body{height:100%;margin:0;background:linear-gradient(180deg,var(--bg),#fff);color:var(--ink);}
+    .app{max-width:1050px;margin:30px auto;padding:16px;}
+    
+    /* --- Header y Layout --- */
+    header{display:flex;align-items:center;gap:14px;padding:10px 8px; margin-bottom: 20px;}
+    .logo{width:56px;height:56px;border-radius:14px;background:linear-gradient(180deg,#fff,#f5e6d0);display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow);font-size:30px; font-weight:900; color: #555;}
+    .title{font-weight:900;font-size:22px;letter-spacing:0.5px}
+    .panel{display:grid;grid-template-columns:350px 1fr;gap:30px;}
+
+    /* --- Lista Izquierda (List) --- */
+    .list{background:var(--card);padding:16px;border-radius:var(--radius);box-shadow:var(--shadow);height:75vh;overflow-y:auto; border: 1px solid rgba(0,0,0,0.05);}
+    .search{display:flex;gap:10px;margin-bottom:14px;position:sticky;top:0;background:var(--card);padding:8px 0;z-index:10;box-shadow:0 4px 6px -6px rgba(0,0,0,0.1)}
+    .search input, .search select{flex:1;padding:12px;border-radius:14px;border:2px solid #e7dfd1;background:#fffaf3;outline:none;font-size:15px;font-weight:700}
+    
+    .poke-card{display:flex;align-items:center;gap:14px;padding:12px;border-radius:16px;margin-bottom:10px;cursor:pointer;background:linear-gradient(180deg,#ffffff,#fefcf8);box-shadow:0 4px 10px rgba(0,0,0,0.04);transition:transform .15s, box-shadow .15s, border .15s}
+    .poke-card:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(0,0,0,0.08)}
+    .mini-sprite{width:64px;height:64px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-weight:700;color:var(--muted);background-color: #f7f2ed; border: 1px solid rgba(0,0,0,0.05); overflow: hidden; flex-shrink: 0;}
+    .mini-sprite img { height: 100%; width: 100%; object-fit: contain; }
+    .meta{display:flex;flex-direction:column}
+    .meta strong{font-weight:900;font-size:17px; margin-bottom: 2px;}
+    .meta small{color:var(--muted);font-weight:600;font-size: 13px;}
+
+    /* --- Ficha Derecha (Sheet) | CARD LAYOUT --- */
+    .sheet{
+        background:var(--card);
+        padding:20px; 
+        border-radius:var(--radius);
+        box-shadow:var(--shadow);
+        height:75vh;
+        display:flex;
+        flex-direction:column;
+        border: 1px solid rgba(0,0,0,0.05);
+        position: relative; 
+        overflow: hidden; 
+    }
+    
+    /* Contenedor principal del Sprite */
+    .sprite-area-card{
+        flex-grow: 1; 
+        display:flex;
+        flex-direction: column; 
+        align-items:center;
+        justify-content:flex-start; 
+        background:#fdf9f4;
+        border-radius:16px;
+        position: relative; 
+        border:2px solid rgba(0,0,0,0.03);
+        padding-top: 90px; 
+        padding-bottom: 20px;
+        min-height: 400px; 
+    }
+
+    /* Sprite Contenedor (Optimización de Espacio) */
+    .big-sprite{
+        width: 100%; 
+        height: 100%; 
+        position: absolute;
+        top: 0;
+        left: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center; 
+        z-index: 1;
+        overflow: hidden;
+        top: -10%; 
+    }
+    .big-sprite img { 
+        height: 85%; 
+        width: auto; 
+        object-fit: contain; 
+        image-rendering: pixelated; 
+        transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); 
+    }
+
+    /* Capa superior de Overlays */
+    .overlay-container {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 5; 
+        padding: 20px;
+        pointer-events: none; 
+        display: flex;
+        flex-direction: column;
+    }
+    
+    /* Header compacto (Vidas/EXP) */
+    .compact-header{
+        display:flex;
+        justify-content:space-between;
+        align-items:center;
+        gap:16px;
+        width: 100%;
+        pointer-events: all;
+    }
+    .exp-group, .life-group {
+        display:flex; 
+        align-items:center; 
+        gap:6px;
+        background: rgba(255, 255, 255, 0.9);
+        backdrop-filter: blur(5px);
+        padding: 8px;
+        border-radius: 16px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+        border: 1px solid rgba(0,0,0,0.05);
+    }
+    
+    /* Círculos de Stats */
+    .stat-circle{
+        width:56px; 
+        height:56px;
+        border-radius:999px;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        justify-content:center;
+        color:white;
+        font-weight:900;
+        box-shadow:0 6px 14px rgba(0,0,0,0.15);
+        border:3px solid rgba(255,255,255,0.25);
+        pointer-events: none; 
+    }
+    .stat-circle small{font-size:10px;opacity:0.9;font-weight:700}
+    .stat-circle .num{font-size:22px}
+    .exp-circle{background:linear-gradient(180deg,#b487cc,var(--exp));box-shadow:0 6px 14px rgba(122,71,160,0.3);}
+    .heart{background:linear-gradient(180deg,#ff809a,var(--heart));box-shadow:0 6px 14px rgba(255,80,110,0.3); font-size:24px}
+    .heart-icon{font-size: 16px; margin-bottom: 4px; opacity: 0.9;}
+
+    /* Contenedor Inferior (Estilo, Descripción, Nombre) */
+    .bottom-overlay{
+        margin-top: auto; 
+        width: 100%;
+        pointer-events: none;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 10px;
+    }
+
+    .style-badge-compact{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 10px 14px; 
+        border-radius: 16px;
+        background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(250,240,255,0.95));
+        backdrop-filter: blur(5px);
+        border: 2px solid rgba(0,0,0,0.1);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        font-size: 16px; 
+    }
+    .style-badge-compact .left{
+        display: flex;
+        align-items: center;
+        gap: 8px; 
+        font-weight: 900;
+    }
+    .poke-title-card {
+        font-weight:900; 
+        font-size:30px; 
+        text-align: left;
+        color: var(--ink); 
+        margin-top: 4px;
+        pointer-events: all; 
+    }
+
+    /* Descripción de Estilo (Transparente) */
+    .style-desc{
+        padding:12px;
+        border-radius:14px;
+        background:rgba(255,255,255,0.08); 
+        backdrop-filter: blur(15px); 
+        border:2px solid rgba(255,255,255,0.03); 
+        box-shadow:inset 0 0 0 1px rgba(0,0,0,0.02); 
+        font-size:13px; 
+        font-weight:700; 
+        color:var(--ink);
+        pointer-events: none;
+        text-shadow: 0 1px 1px rgba(255,255,255,0.5); 
+        line-height: 1.5;
+    }
+    .style-desc strong{font-weight:900; font-size: 14px;}
+    .style-desc p{margin-top:6px; font-weight: 600}
+
+
+    /* --- POSICIONES DE CONTROLES (¡AJUSTES FINALES PARA PERFECCIÓN!) --- */
+
+    /* NUEVO CONTENEDOR FLEXIBLE PARA LA FILA SUPERIOR */
+    .top-controls-row {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 15px; /* Espacio debajo de la fila */
+        pointer-events: all;
+    }
+    
+    /* 1. BARRA DE EXP (entre EXP y Vidas) - CON BORDE NEGRO */
+    .card-exp-bar-position {
+        flex-grow: 1; /* Ocupa el espacio central */
+        max-width: 40%; 
+        margin: 0 15px; 
+    }
+    .exp-bar-wrapper{
+        width: 100%;
+        height:10px; 
+        background: rgba(155, 89, 182, 0.2); 
+        padding: 0; 
+        border-radius: 8px;
+        box-shadow: none;
+        /* BORDE NEGRO SOLICITADO */
+        border: 2px solid var(--ink); 
+    }
+    .exp-bar{height:100%; background:linear-gradient(90deg, #9b59b6, #7a47a1); transition: width 0.3s ease-out; border-radius:8px;}
+
+    /* 2. GRUPO DE BOTONES VERTICALES (DADO + RESET) */
+    .roll-button-position, .reset-button-position {
+        /* Ocultamos las posiciones anteriores para usar el nuevo grupo */
+        display: none; 
+    }
+    
+    .vertical-button-group {
+        position: absolute;
+        right: 20px;
+        top: 38%; /* CENTRAMOS VERTICALMENTE AL 40% (MÁS ARRIBA) */
+        transform: translateY(-45%); /* Ajuste para un centrado vertical perfecto */
+        z-index: 10;
+        pointer-events: all;
+        display: flex;
+        flex-direction: column; /* Apilamiento vertical */
+        align-items: center;
+        gap: 5px; /* Mantenemos el espacio reducido */
+    }
+
+    #rollBtn {
+        padding:10px 18px; 
+        border-radius:12px;
+        font-size:16px;
+        font-weight:800;
+        background:#3b2f2f; /* Color NEGRO */
+        color:white;
+        box-shadow:0 4px 10px rgba(59,47,47,0.3);
+        border: none;
+        cursor: pointer;
+        transition: transform .15s, box-shadow .15s; 
+    }
+    #rollBtn:hover:not(:disabled){transform:translateY(-1px); box-shadow:0 6px 14px rgba(59,47,47,0.45)}
+    #rollBtn:disabled { opacity: 0.6; cursor: not-allowed; box-shadow:none; transform:none }
+
+    #rollResult {
+        font-weight:800; 
+        display:block; 
+        text-align: center;
+        padding-top: 5px;
+        font-size: 14px;
+        color: var(--muted);
+    }
+    
+    #resetBtn {
+        padding: 10px 14px;
+        font-size: 14px;
+        border-radius: 10px;
+        font-weight: 700;
+        background: #ff7f7f; 
+        color: white;
+        box-shadow: 0 4px 8px rgba(255,0,0,0.15);
+        border: none;
+        cursor: pointer;
+        transition: transform .15s, box-shadow .15s;
+    }
+    #resetBtn:hover:not(:disabled){transform:translateY(-1px); box-shadow:0 6px 12px rgba(255,0,0,0.25)}
+    #resetBtn:disabled { opacity: 0.6; cursor: not-allowed; box-shadow:none; transform:none }
+
+
+    /* 3. ESTADÍSTICA DE VELOCIDAD (entre Estilo y Etapa) */
+    .speed-stat-position {
+        background: rgba(15, 120, 200, 0.85); /* Azul */
+        color: white;
+        padding: 4px 10px; 
+        border-radius: 8px;
+        font-weight: 800;
+        font-size: 14px;
+        box-shadow: 0 2px 5px rgba(15, 120, 200, 0.3);
+        pointer-events: all; 
+        margin-right: 10px; 
+    }
+    
+    /* Botones de + / - compactos */
+    .btn-compact{
+        padding:8px 10px; border-radius:10px; font-size:18px; width:40px; height:40px; 
+        display:flex; align-items:center; justify-content:center; 
+        box-shadow:0 2px 4px rgba(255,160,0,0.1);
+        border: none;
+        cursor: pointer;
+        transition: transform .15s, box-shadow .15s;
+    }
+    .btn-compact.btn-ghost{
+        background:#fff;border:1px solid rgba(0,0,0,0.1);color:var(--ink);
+        box-shadow:0 2px 4px rgba(0,0,0,0.05);
+    }
+    .btn-compact:hover:not(:disabled){transform:translateY(-1px); box-shadow:0 4px 8px rgba(255,160,0,0.25)}
+    .btn-compact.btn-ghost:hover:not(:disabled){transform:translateY(-1px); box-shadow:0 4px 8px rgba(0,0,0,0.1)}
+    .btn-compact:disabled { opacity: 0.6; cursor: not-allowed; box-shadow:none; transform:none }
+
+
+    .log{height:100px;overflow-y:auto;background:linear-gradient(180deg,#fff,#fff7f0);padding:10px;border-radius:10px;border:1px dashed rgba(0,0,0,0.05);font-size:14px;margin-top:18px}
+    .log div { margin-bottom: 4px; border-bottom: 1px dotted rgba(0,0,0,0.1); padding-bottom: 4px; font-weight:600; color:var(--muted) }
+    .log div:last-child { margin-bottom: 0; border-bottom: none; }
+    .log .event{color:var(--exp); font-weight:800} 
+
+    footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+
+    /* Mobile responsive (Ajustes menores) */
+    @media (max-width:900px){
+        .app { margin: 16px auto; }
+        .panel{grid-template-columns:1fr; gap: 16px;}
+        .list{height:38vh; min-height: 250px;}
+        .sheet{height:calc(100vh - 250px); padding: 12px}
+        .sprite-area-card { min-height: 300px; padding: 10px; padding-top: 80px; }
+        .overlay-container { padding: 12px; }
+        .compact-header { gap: 10px; }
+        .stat-circle { width: 48px; height: 48px; }
+        .stat-circle .num { font-size: 18px; }
+        .big-sprite img { height: 90%; top: -5%; } 
+        
+        .top-controls-row { margin-bottom: 10px; }
+        .card-exp-bar-position { max-width: 50%; margin: 0 10px; }
+
+        /* Ocultamos el grupo vertical en móvil si está en la esquina superior derecha*/
+        .vertical-button-group { display:flex; }
+        
+        .speed-stat-position { margin-right: 5px; font-size: 13px; padding: 3px 8px; }
+
+        .poke-title-card { font-size: 26px; }
+    }
